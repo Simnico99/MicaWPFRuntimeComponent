@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MicaWPFRuntimeComponent</id>
+    <license type="expression">MIT</license>
+    <version>1.0.0</version>
+    <authors>Simnico99</authors>
+    <repository type="git" url="https://github.com/Simnico99/MicaWPFRuntimeComponent.git" branch="main"/>
+    <description>Connection between MicaWPF and RuntimeComponents (Please use MicaWPF instead)</description>
+    <dependencies>
+      <group targetFramework="net5.0-windows10.0.19041.0" />
+      <group targetFramework="net6.0-windows10.0.19041.0" />
+      <group targetFramework=".NETCoreApp3.1" />
+      <group targetFramework=".NETFramework4.7.2" />
+      <group targetFramework=".NETFramework4.8" />
+    </dependencies>
+  </metadata>
+  <files>
+    <!--Support .NET 6, .NET Core 3, UAP, .NET Framework 4.6, C++ -->
+    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net5.0-windows10.0.19041.0\MicaWPF.Projection.dll" />
+    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net6.0-windows10.0.19041.0\MicaWPF.Projection.dll" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\netcoreapp3.1\MicaWPFRuntimeComponent.winmd" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework472\MicaWPFRuntimeComponent.winmd" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework48\MicaWPFRuntimeComponent.winmd" />
+    <!--To support x86 and ARM64, build SimpleMathComponent for those other architectures and uncomment the entries below.-->
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.dll" target="runtimes\win10-x64\native\MicaWPFRuntimeComponent.dll" />
+    <!--<file src="..\..\_build\Win32\Release\SimpleMathComponent\bin\SimpleMathComponent\SimpleMathComponent.dll" target="runtimes\win10-x86\native\SimpleMathComponent.dll" />-->
+    <!--<file src="..\..\_build\arm64\Release\SimpleMathComponent\bin\SimpleMathComponent\SimpleMathComponent.dll" target="runtimes\win10-arm64\native\SimpleMathComponent.dll" />-->
+  </files>
+</package>

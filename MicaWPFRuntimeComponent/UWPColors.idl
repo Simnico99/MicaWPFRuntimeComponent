@@ -1,0 +1,9 @@
+namespace MicaWPFRuntimeComponent
+{
+    [default_interface]
+    runtimeclass UWPColors
+    {
+        UWPColors();
+        Windows.Foundation.Collections.IVectorView<String> GetSystemColors();
+    }
+}
