@@ -3,7 +3,7 @@
   <metadata>
     <id>MicaWPFRuntimeComponent</id>
     <license type="expression">MIT</license>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Simnico99</authors>
     <repository type="git" url="https://github.com/Simnico99/MicaWPFRuntimeComponent.git" branch="main"/>
     <description>Connection between MicaWPF and RuntimeComponents (Please use MicaWPF instead)</description>
@@ -17,11 +17,11 @@
   </metadata>
   <files>
     <!--Support .NET 6, .NET Core 3, UAP, .NET Framework 4.6, C++ -->
-    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net5.0-windows10.0.19041.0\MicaWPF.Projection.dll" />
-    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net6.0-windows10.0.19041.0\MicaWPF.Projection.dll" />
-    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\netcoreapp3.1\MicaWPFRuntimeComponent.winmd" />
-    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework472\MicaWPFRuntimeComponent.winmd" />
-    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework48\MicaWPFRuntimeComponent.winmd" />
+    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net5.0-windows7.0\MicaWPF.Projection.dll" />
+    <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\MicaWPF.Projection.dll" target="lib\net6.0-windows7.0\MicaWPF.Projection.dll" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\netcoreapp3.1\MicaWPFRuntimeComponent.dll" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework472\MicaWPFRuntimeComponent.dll" />
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.winmd" target="lib\NETFramework48\MicaWPFRuntimeComponent.dll" />
     <!--To support x86 and ARM64, build SimpleMathComponent for those other architectures and uncomment the entries below.-->
     <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.dll" target="runtimes\win10-x64\native\MicaWPFRuntimeComponent.dll" />
     <!--<file src="..\..\_build\Win32\Release\SimpleMathComponent\bin\SimpleMathComponent\SimpleMathComponent.dll" target="runtimes\win10-x86\native\SimpleMathComponent.dll" />-->
