@@ -24,7 +24,7 @@ namespace winrt::MicaWPFRuntimeComponent::implementation
         vect.Append(hstring(CreateColorStrings(systemAccentColorLight3, "SystemAccentColorLight3")));
         vect.Append(hstring(CreateColorStrings(systemAccentColorDark1, "SystemAccentColorDark1")));
         vect.Append(hstring(CreateColorStrings(systemAccentColorDark2, "SystemAccentColorDark2")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorDark2, "SystemAccentColorDark3")));
+        vect.Append(hstring(CreateColorStrings(systemAccentColorDark3, "SystemAccentColorDark3")));
 
         return vect.GetView();
     }
