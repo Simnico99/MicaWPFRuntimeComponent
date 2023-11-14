@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows10.0.19041.0;net6.0-windows10.0.19041.0;net7.0-windows10.0.19041.0</TargetFrameworks>
-    <TargetPlatformMinVersion>7.0</TargetPlatformMinVersion>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
     <Platform>AnyCPU</Platform>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,12 +17,10 @@
     <None Include="nuget\MicaWPF.Projection.nuspec" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows10.0.19041.0' or '$(TargetFramework)' == 'net7.0-windows10.0.19041.0'">
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net5.0-windows10.0.19041.0'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.5" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.vcxproj" />
   </ItemGroup>
