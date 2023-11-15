@@ -5,17 +5,14 @@
     <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
     <Platform>AnyCPU</Platform>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Deterministic>true</Deterministic>
+    <AssemblyVersion>1.1.8</AssemblyVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="nuget\net6.0-windows10.0.19041.0\**" />
-    <EmbeddedResource Remove="nuget\net6.0-windows10.0.19041.0\**" />
-    <None Remove="nuget\net6.0-windows10.0.19041.0\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="nuget\MicaWPF.Projection.nuspec" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.6.5" />
@@ -35,6 +32,7 @@
     <NuspecFile>$(GeneratedNugetDir)MicaWPF.Projection.nuspec</NuspecFile>
     <OutputPath>$(GeneratedNugetDir)</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   
   
