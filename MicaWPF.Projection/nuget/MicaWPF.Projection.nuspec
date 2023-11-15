@@ -16,16 +16,13 @@
   </metadata>
   <files>
     <file src="..\..\README.md" target="" />
-    <!--Support .NET 6, .NET Core 3, UAP, .NET Framework 4.6, C++ -->
     <file src="..\obj\Release\net6.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net6.0\MicaWPF.Projection.dll" />
     <file src="..\obj\Release\net7.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net7.0\MicaWPF.Projection.dll" />
     <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net8.0\MicaWPF.Projection.dll" />
     <file src="..\obj\Release\net6.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net6.0\MicaWPF.Projection.pdb" />
     <file src="..\obj\Release\net7.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net7.0\MicaWPF.Projection.pdb" />
     <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net8.0\MicaWPF.Projection.pdb" />
-    <!--To support x86 and ARM64, build SimpleMathComponent for those other architectures and uncomment the entries below.-->
     <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.dll" target="runtimes\win\native\MicaWPFRuntimeComponent.dll" />
-    <!--<file src="..\..\_build\Win32\Release\SimpleMathComponent\bin\SimpleMathComponent\SimpleMathComponent.dll" target="runtimes\win10-x86\native\SimpleMathComponent.dll" />-->
-    <!--<file src="..\..\_build\arm64\Release\SimpleMathComponent\bin\SimpleMathComponent\SimpleMathComponent.dll" target="runtimes\win10-arm64\native\SimpleMathComponent.dll" />-->
+    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.pdb" target="runtimes\win\native\MicaWPFRuntimeComponent.pdb" />
   </files>
 </package>
