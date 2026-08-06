@@ -1,6 +1,9 @@
-﻿#pragma once
+#pragma once
 
 #include "UWPColors.g.h"
+
+#include <string>
+#include <string_view>
 
 namespace winrt::MicaWPFRuntimeComponent::implementation
 {
@@ -8,9 +11,14 @@ namespace winrt::MicaWPFRuntimeComponent::implementation
     {
         UWPColors() = default;
 
+        [[nodiscard]]
         Windows::Foundation::Collections::IVectorView<hstring> GetSystemColors();
-        std::wstring CreateColorStrings(winrt::Windows::UI::Color color, char attributeName[]);
-        std::wstring s2ws(const std::string& str);
+
+    private:
+        [[nodiscard]]
+        static std::wstring CreateColorString(
+            Windows::UI::Color color,
+            std::wstring_view attributeName);
     };
 }
 
