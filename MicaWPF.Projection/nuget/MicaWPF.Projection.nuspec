@@ -27,6 +27,5 @@
     <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\net9.0\MicaWPF.Projection.pdb" target="lib\net9.0\MicaWPF.Projection.pdb" />
     <file src="..\..\_build\AnyCPU\Release\MicaWPF.Projection\bin\net10.0\MicaWPF.Projection.pdb" target="lib\net10.0\MicaWPF.Projection.pdb" />
     <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.dll" target="runtimes\win-x64\native\MicaWPFRuntimeComponent.dll" />
-    <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.pdb" target="runtimes\win-x64\native\MicaWPFRuntimeComponent.pdb" />
   </files>
 </package>
