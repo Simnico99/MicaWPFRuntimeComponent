@@ -1,9 +1,20 @@
 <Project>
-
   <PropertyGroup>
-    <BuildOutDir>$([MSBuild]::NormalizeDirectory('$(SolutionDir)', '_build', '$(Platform)', '$(Configuration)'))</BuildOutDir>
+    <BuildOutDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '_build', '$(Platform)', '$(Configuration)'))</BuildOutDir>
+  </PropertyGroup>
+
+  <!-- Native C++ project -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
     <OutDir>$([MSBuild]::NormalizeDirectory('$(BuildOutDir)', '$(MSBuildProjectName)', 'bin'))</OutDir>
     <IntDir>$([MSBuild]::NormalizeDirectory('$(BuildOutDir)', '$(MSBuildProjectName)', 'obj'))</IntDir>
   </PropertyGroup>
 
+  <!-- SDK-style managed projects -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj' and '$(TargetFramework)' == ''">
+    <OutDir>$([MSBuild]::NormalizeDirectory('$(BuildOutDir)', '$(MSBuildProjectName)', 'bin'))</OutDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj' and '$(TargetFramework)' != ''">
+    <OutDir>$([MSBuild]::NormalizeDirectory('$(BuildOutDir)', '$(MSBuildProjectName)', 'bin', '$(TargetFramework)'))</OutDir>
+  </PropertyGroup>
 </Project>
