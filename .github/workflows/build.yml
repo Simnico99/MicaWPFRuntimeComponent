@@ -67,6 +67,7 @@ jobs:
           dotnet --list-sdks
 
           Write-Host '=== Visual Studio ==='
+
           $vswhere = Join-Path `
               ${env:ProgramFiles(x86)} `
               'Microsoft Visual Studio\Installer\vswhere.exe'
@@ -76,6 +77,22 @@ jobs:
               -products '*' `
               -format json
 
+      - name: Verify repository
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $solutionPath = Join-Path `
+              $env:GITHUB_WORKSPACE `
+              $env:SOLUTION_PATH
+
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+          Write-Host "Solution:  $solutionPath"
+
+          if (-not (Test-Path -LiteralPath $solutionPath)) {
+              throw "Solution not found: $solutionPath"
+          }
+
       - name: Create output directories
         shell: pwsh
         run: |
@@ -84,7 +101,9 @@ jobs:
           New-Item `
               -ItemType Directory `
               -Force `
-              -Path '_artifacts', '_logs' |
+              -Path `
+                  '_artifacts',
+                  '_logs' |
               Out-Null
 
       - name: Restore NuGet packages
@@ -140,54 +159,104 @@ jobs:
               -ItemType Directory `
               -Force `
               -Path `
-                  $packageDestination, `
-                  $nativeDestination, `
+                  $packageDestination,
+                  $nativeDestination,
                   $projectionDestination |
               Out-Null
 
-          $packages = Get-ChildItem `
-              -Path $env:GITHUB_WORKSPACE `
-              -Recurse `
-              -File |
-              Where-Object {
-                  $_.Extension -in '.nupkg', '.snupkg' -and
-                  $_.FullName -notmatch '\\packages\\'
-              }
+          Write-Host '=== Finding NuGet packages ==='
 
-          if (-not $packages) {
+          $packages = @(
+              Get-ChildItem `
+                  -Path $env:GITHUB_WORKSPACE `
+                  -Recurse `
+                  -File |
+                  Where-Object {
+                      $_.Extension -in '.nupkg', '.snupkg' -and
+                      $_.FullName -notmatch '\\packages\\' -and
+                      $_.FullName -notmatch '\\_artifacts\\'
+                  }
+          )
+
+          if ($packages.Count -eq 0) {
               throw 'No NuGet package was generated.'
           }
 
           foreach ($package in $packages) {
+              Write-Host "Collecting package: $($package.FullName)"
+
               Copy-Item `
                   -LiteralPath $package.FullName `
                   -Destination $packageDestination `
                   -Force
           }
 
+          Write-Host '=== Collecting native output ==='
+
           $nativeSource = Join-Path `
               $env:GITHUB_WORKSPACE `
-              '_build\x64\Release'
+              '_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent'
 
           if (-not (Test-Path -LiteralPath $nativeSource)) {
               throw "Native output directory not found: $nativeSource"
           }
 
+          $nativeDll = Join-Path `
+              $nativeSource `
+              'MicaWPFRuntimeComponent.dll'
+
+          if (-not (Test-Path -LiteralPath $nativeDll)) {
+              throw "Native DLL not found: $nativeDll"
+          }
+
           Copy-Item `
-              -Path "$nativeSource\*" `
+              -LiteralPath $nativeDll `
               -Destination $nativeDestination `
-              -Recurse `
               -Force
+
+          $nativePdb = Join-Path `
+              $nativeSource `
+              'MicaWPFRuntimeComponent.pdb'
+
+          if (Test-Path -LiteralPath $nativePdb) {
+              Copy-Item `
+                  -LiteralPath $nativePdb `
+                  -Destination $nativeDestination `
+                  -Force
+          }
+
+          $nativeWinmd = Join-Path `
+              $nativeSource `
+              'MicaWPFRuntimeComponent.winmd'
+
+          if (Test-Path -LiteralPath $nativeWinmd) {
+              Copy-Item `
+                  -LiteralPath $nativeWinmd `
+                  -Destination $nativeDestination `
+                  -Force
+          }
+
+          Write-Host '=== Collecting managed projections ==='
 
           foreach ($targetFramework in 'net8.0', 'net9.0', 'net10.0') {
               $projectionSource = Join-Path `
                   $env:GITHUB_WORKSPACE `
-                  "MicaWPF.Projection\obj\Release\$targetFramework\IIDOptimizer"
+                  "_build\AnyCPU\Release\MicaWPF.Projection\bin\$targetFramework"
 
               if (-not (Test-Path -LiteralPath $projectionSource)) {
                   throw `
-                      "Projection output not found for $targetFramework`: " +
-                      $projectionSource
+                      "Projection output directory not found for " +
+                      "$targetFramework`: $projectionSource"
+              }
+
+              $projectionDll = Join-Path `
+                  $projectionSource `
+                  'MicaWPF.Projection.dll'
+
+              if (-not (Test-Path -LiteralPath $projectionDll)) {
+                  throw `
+                      "Projection DLL not found for " +
+                      "$targetFramework`: $projectionDll"
               }
 
               $targetDestination = Join-Path `
@@ -201,10 +270,31 @@ jobs:
                   Out-Null
 
               Copy-Item `
-                  -Path "$projectionSource\*" `
+                  -LiteralPath $projectionDll `
                   -Destination $targetDestination `
-                  -Recurse `
                   -Force
+
+              $projectionPdb = Join-Path `
+                  $projectionSource `
+                  'MicaWPF.Projection.pdb'
+
+              if (Test-Path -LiteralPath $projectionPdb) {
+                  Copy-Item `
+                      -LiteralPath $projectionPdb `
+                      -Destination $targetDestination `
+                      -Force
+              }
+
+              $projectionDeps = Join-Path `
+                  $projectionSource `
+                  'MicaWPF.Projection.deps.json'
+
+              if (Test-Path -LiteralPath $projectionDeps) {
+                  Copy-Item `
+                      -LiteralPath $projectionDeps `
+                      -Destination $targetDestination `
+                      -Force
+              }
           }
 
           Write-Host '=== Collected artifacts ==='
@@ -213,6 +303,7 @@ jobs:
               -Path $artifactRoot `
               -Recurse `
               -File |
+              Sort-Object FullName |
               ForEach-Object {
                   $_.FullName.Substring(
                       $env:GITHUB_WORKSPACE.Length + 1
@@ -234,6 +325,7 @@ jobs:
               Where-Object {
                   $_.Name -notlike '*.snupkg'
               } |
+              Sort-Object LastWriteTimeUtc -Descending |
               Select-Object -First 1
 
           if ($null -eq $package) {
@@ -244,7 +336,7 @@ jobs:
               'lib/net8.0/MicaWPF.Projection.dll'
               'lib/net9.0/MicaWPF.Projection.dll'
               'lib/net10.0/MicaWPF.Projection.dll'
-              'runtimes/win/native/MicaWPFRuntimeComponent.dll'
+              'runtimes/win-x64/native/MicaWPFRuntimeComponent.dll'
               'README.md'
           )
 
@@ -268,9 +360,7 @@ jobs:
                   }
               }
 
-              Write-Host `
-                  "Validated package: $($package.Name)"
-
+              Write-Host "Validated package: $($package.Name)"
               Write-Host '=== Package contents ==='
 
               $entries |
