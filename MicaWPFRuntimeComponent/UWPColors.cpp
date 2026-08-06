@@ -1,73 +1,88 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "UWPColors.h"
 #include "UWPColors.g.cpp"
-#include <sstream>
 
+#include <string>
+#include <string_view>
 
 namespace winrt::MicaWPFRuntimeComponent::implementation
 {
-    Windows::Foundation::Collections::IVectorView<hstring> UWPColors::GetSystemColors()
+    Windows::Foundation::Collections::IVectorView<hstring>
+        UWPColors::GetSystemColors()
     {
-        Windows::Foundation::Collections::IVector<hstring>  vect{ winrt::single_threaded_vector<hstring>() };
-        auto uiSettings = Windows::UI::ViewManagement::UISettings();
-        auto systemAccentColor = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::Accent);
-        auto systemAccentColorLight1 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentLight1);
-        auto systemAccentColorLight2 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentLight2);
-        auto systemAccentColorLight3 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentLight3);
-        auto systemAccentColorDark1 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentDark1);
-        auto systemAccentColorDark2 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentDark2);
-        auto systemAccentColorDark3 = uiSettings.GetColorValue(Windows::UI::ViewManagement::UIColorType::AccentDark3);
+        const auto uiSettings =
+            Windows::UI::ViewManagement::UISettings();
 
-        vect.Append(hstring(CreateColorStrings(systemAccentColor, "SystemAccentColor")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorLight1, "SystemAccentColorLight1")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorLight2, "SystemAccentColorLight2")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorLight3, "SystemAccentColorLight3")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorDark1, "SystemAccentColorDark1")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorDark2, "SystemAccentColorDark2")));
-        vect.Append(hstring(CreateColorStrings(systemAccentColorDark3, "SystemAccentColorDark3")));
+        auto colors = winrt::single_threaded_vector<hstring>();
 
-        return vect.GetView();
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::Accent),
+                L"SystemAccentColor"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentLight1),
+                L"SystemAccentColorLight1"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentLight2),
+                L"SystemAccentColorLight2"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentLight3),
+                L"SystemAccentColorLight3"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentDark1),
+                L"SystemAccentColorDark1"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentDark2),
+                L"SystemAccentColorDark2"));
+
+        colors.Append(
+            CreateColorString(
+                uiSettings.GetColorValue(
+                    Windows::UI::ViewManagement::UIColorType::AccentDark3),
+                L"SystemAccentColorDark3"));
+
+        return colors.GetView();
     }
 
-    std::wstring MicaWPFRuntimeComponent::implementation::UWPColors::CreateColorStrings(winrt::Windows::UI::Color color, char attributeName[])
+    std::wstring UWPColors::CreateColorString(
+        const Windows::UI::Color color,
+        const std::wstring_view attributeName)
     {
-        std::wstring string;
+        auto result = std::wstring();
 
-        std::stringstream charAStream;
-        charAStream << unsigned(color.A);
-        auto charAString = charAStream.str();
+        // Four values of up to three digits, four commas and the name.
+        result.reserve(attributeName.size() + 16);
 
-        std::stringstream charRStream;
-        charRStream << unsigned(color.R);
-        auto charRString = charRStream.str();
+        result.append(std::to_wstring(color.A));
+        result.push_back(L',');
 
-        std::stringstream charGStream;
-        charGStream << unsigned(color.G);
-        auto charGString = charGStream.str();
+        result.append(std::to_wstring(color.R));
+        result.push_back(L',');
 
-        std::stringstream charBStream;
-        charBStream << unsigned(color.B);
-        auto charBString = charBStream.str();
+        result.append(std::to_wstring(color.G));
+        result.push_back(L',');
 
+        result.append(std::to_wstring(color.B));
+        result.push_back(L',');
 
-        string.append(s2ws(charAString));
-        string.push_back(',');
-        string.append(s2ws(charRString));
-        string.push_back(',');
-        string.append(s2ws(charGString));
-        string.push_back(',');
-        string.append(s2ws(charBString));
-        string.push_back(',');
-        string.append(s2ws(attributeName));
+        result.append(attributeName);
 
-        return string;
-    }
-
-    std::wstring MicaWPFRuntimeComponent::implementation::UWPColors::s2ws(const std::string& str)
-    {
-        int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-        std::wstring wstrTo(size_needed, 0);
-        MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
-        return wstrTo;
+        return result;
     }
 }
