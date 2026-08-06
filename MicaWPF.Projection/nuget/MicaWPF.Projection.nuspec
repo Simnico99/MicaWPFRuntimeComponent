@@ -3,7 +3,7 @@
   <metadata>
     <id>MicaWPFRuntimeComponent</id>
     <license type="expression">MIT</license>
-    <version>1.1.9</version>
+    <version>1.2.0</version>
     <authors>Simnico99</authors>
 
     <repository type="git" url="https://github.com/Simnico99/MicaWPFRuntimeComponent.git" branch="main" />
