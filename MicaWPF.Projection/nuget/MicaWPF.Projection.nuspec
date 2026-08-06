@@ -16,12 +16,12 @@
   </metadata>
   <files>
     <file src="..\..\README.md" target="" />
-    <file src="..\obj\Release\net6.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net8.0\MicaWPF.Projection.dll" />
-    <file src="..\obj\Release\net7.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net9.0\MicaWPF.Projection.dll" />
-    <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net10.0\MicaWPF.Projection.dll" />
-    <file src="..\obj\Release\net6.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net8.0\MicaWPF.Projection.pdb" />
-    <file src="..\obj\Release\net7.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net9.0\MicaWPF.Projection.pdb" />
-    <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net10.0\MicaWPF.Projection.pdb" />
+    <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net8.0\MicaWPF.Projection.dll" />
+    <file src="..\obj\Release\net9.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net9.0\MicaWPF.Projection.dll" />
+    <file src="..\obj\Release\net10.0\IIDOptimizer\MicaWPF.Projection.dll" target="lib\net10.0\MicaWPF.Projection.dll" />
+    <file src="..\obj\Release\net8.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net8.0\MicaWPF.Projection.pdb" />
+    <file src="..\obj\Release\net9.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net9.0\MicaWPF.Projection.pdb" />
+    <file src="..\obj\Release\net10.0\IIDOptimizer\MicaWPF.Projection.pdb" target="lib\net10.0\MicaWPF.Projection.pdb" />
     <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.dll" target="runtimes\win\native\MicaWPFRuntimeComponent.dll" />
     <file src="..\..\_build\x64\Release\MicaWPFRuntimeComponent\bin\MicaWPFRuntimeComponent\MicaWPFRuntimeComponent.pdb" target="runtimes\win\native\MicaWPFRuntimeComponent.pdb" />
   </files>
